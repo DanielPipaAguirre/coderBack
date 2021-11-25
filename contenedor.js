@@ -2,7 +2,7 @@ const fs = require("fs");
 
 class Contenedor {
     constructor() {
-        this.contador = 0;
+        this.contador = 1;
         this.archivos = [];
     }
 
@@ -69,6 +69,19 @@ class Contenedor {
         } catch (e) {
             console.error(e.message);
         }
+    }
+
+    async updateById(id, archivo) {
+        const contenido = JSON.parse(
+            await fs.promises.readFile("./productos.txt", "utf-8")
+        );
+        const index = contenido.findIndex((archivo) => archivo.id === id);
+        const nuevoArchivo = { ...archivo, id };
+        contenido[index] = nuevoArchivo;
+        await fs.promises.writeFile(
+            "./productos.txt",
+            JSON.stringify(contenido)
+        );
     }
 }
 
