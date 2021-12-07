@@ -8,9 +8,14 @@ const PORT = 8080;
 const manejadorArchivo = new Contenedor();
 const router = new Router();
 
+app.get("/", async (req, res, next) => {
+    res.render("index.pug");
+});
+
 router.get("/", async (req, res, next) => {
     const products = await manejadorArchivo.getAll();
-    res.json(products);
+    // res.json(products);
+    res.render("table.pug", { products });
 });
 
 router.get("/:id", async (req, res, next) => {
@@ -21,7 +26,7 @@ router.get("/:id", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
     await manejadorArchivo.save(req.body);
-    res.json(req.body);
+    res.redirect("/");
 });
 
 router.put("/:id", async (req, res, next) => {
@@ -35,9 +40,11 @@ router.delete("/productos/:id", async (req, res, next) => {
 });
 
 app.use(express.json());
-app.use("/api/productos", router);
-app.use("/public", express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
+app.use("/api/productos", router);
+/* app.use("/public", express.static(path.join(__dirname, "public"))); */
+app.set("views", path.join(__dirname, "views", "pug"));
+app.set("view engine", "pug");
 
 const server = app.listen(PORT, () => {
     console.log(
