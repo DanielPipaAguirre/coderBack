@@ -1,1 +1,1 @@
-[{"title":"Esponjita","price":"3","thumbnail":"https://e7.pngegg.com/pngimages/178/540/png-clipart-spongebob-spongebob.png","id":1}]
+[]
