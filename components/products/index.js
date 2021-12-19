@@ -1,8 +1,8 @@
 const express = require("express");
 const { Router } = express;
 const router = new Router();
-const Contenedor = require("../products/controllers");
-const manejadorArchivo = new Contenedor();
+const Productos = require("../products/controllers");
+const manejadorArchivo = new Productos();
 
 router.get("/", async (req, res, next) => {
     const products = await manejadorArchivo.getAll();
@@ -17,7 +17,7 @@ router.get("/:id", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
     await manejadorArchivo.save(req.body);
-    res.redirect("/");
+    res.json({ estado: "GUARDADO", producto: req.body });
 });
 
 router.put("/:id", async (req, res, next) => {

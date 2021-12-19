@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-class Contenedor {
+class Productos {
     constructor() {
         this.contador = 1;
         this.archivos = [];
@@ -85,4 +85,4 @@ class Contenedor {
     }
 }
 
-module.exports = Contenedor;
+module.exports = Productos;

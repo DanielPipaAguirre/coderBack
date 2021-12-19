@@ -1,10 +1,15 @@
 const express = require("express");
 const path = require("path");
 const handlebars = require("express-handlebars");
+const { Server: HttpServer } = require("http");
 const routerProduct = require("./components/products");
+const Socket = require("./utils/sockets");
 
 const app = express();
 const PORT = 8080;
+const httpServer = new HttpServer(app);
+const socket = new Socket(httpServer);
+socket.init();
 
 app.get("/", async (req, res, next) => {
     res.render("formulario.hbs");
@@ -26,7 +31,7 @@ app.engine(
 app.set("views", path.join(__dirname, "views", "hbs"));
 app.set("view engine", "hbs");
 
-const server = app.listen(PORT, () => {
+const server = httpServer.listen(PORT, () => {
     console.log(
         `Servidor http escuchando en el puerto: ${server.address().port}`
     );
